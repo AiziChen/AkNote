@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBook", "NoteBook\NoteBook.csproj", "{75AF872E-FF7E-4641-8E34-6577374DA29D}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NoteBookSetup", "NoteBookSetup\NoteBookSetup.vdproj", "{884F9A09-CB6C-4013-B026-41607D88F071}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Default = Debug|Default
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75AF872E-FF7E-4641-8E34-6577374DA29D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{75AF872E-FF7E-4641-8E34-6577374DA29D}.Debug|Default.ActiveCfg = Debug|x86
+		{75AF872E-FF7E-4641-8E34-6577374DA29D}.Debug|Default.Build.0 = Debug|x86
+		{75AF872E-FF7E-4641-8E34-6577374DA29D}.Debug|x64.ActiveCfg = Debug|x86
+		{75AF872E-FF7E-4641-8E34-6577374DA29D}.Debug|x64.Build.0 = Debug|x86
+		{884F9A09-CB6C-4013-B026-41607D88F071}.Debug|Any CPU.ActiveCfg = Debug
+		{884F9A09-CB6C-4013-B026-41607D88F071}.Debug|Default.ActiveCfg = Debug
+		{884F9A09-CB6C-4013-B026-41607D88F071}.Debug|Default.Build.0 = Debug
+		{884F9A09-CB6C-4013-B026-41607D88F071}.Debug|x64.ActiveCfg = Debug
+		{884F9A09-CB6C-4013-B026-41607D88F071}.Debug|x64.Build.0 = Debug
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24DBAE10-8EB9-45BF-ADDB-63234E743724}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Default = Debug|Default
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Default = Debug|Default
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Default = Release|Default
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+EndGlobal

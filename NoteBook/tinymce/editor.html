@@ -1,0 +1,67 @@
+﻿<html>
+
+<head>
+    <title>TinyMce</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <script language="javascript" type="text/javascript" src="./tinymce.min.js"></script>
+
+    <script language="javascript" type="text/javascript">
+
+        tinymce.init({
+            selector: "textarea",
+
+            language: "zh_CN",
+
+            plugins: [
+
+                "advlist autolink link image lists charmap preview hr anchor pagebreak",
+
+                "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+
+                "save table contextmenu directionality emoticons paste textcolor codesample"
+
+            ],
+
+            toolbar: "fullscreen",
+
+            statusbar: false,
+
+            toolbar: "formatselect | fontselect | fontsizeselect | forecolor backcolor | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image | hr emoticons | codesample",
+        }).then(function (editors) {
+            tinymce.activeEditor.shortcuts.add('meta+s', "get editor's html", function () {
+                jsEvent.push(getHtml());
+            });
+            tinymce.activeEditor.shortcuts.add('meta+n', "new one note", function () {
+                jsEvent.newNote();
+            });
+            tinymce.activeEditor.execCommand('mceFullScreen');
+            tinymce.activeEditor.dom.setStyle(tinymce.activeEditor.dom.select('body'), 'background-color', '#fcfed0');
+        });
+    </script>
+
+
+</head>
+
+
+<body>
+
+
+<textarea id="editor"></textarea>
+
+    <script>
+        // 设置HTML内容
+        var setHtml = function (content) {
+            tinymce.activeEditor.setContent(decodeURIComponent(content.replace(/\+/g, '%20')));
+        };
+
+        // 取得HTML内容
+        var getHtml = function () {
+            var html = tinymce.activeEditor.getContent();
+            return html;
+        };
+    </script>
+
+</body>
+</html> 
