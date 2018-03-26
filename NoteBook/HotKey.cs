@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace NoteBook
 {
+    /**
+     * 快捷键的绑定
+     * @author 百度例子
+     */
     public class HotKey
     {
         //如果函数执行成功，返回值不为0。

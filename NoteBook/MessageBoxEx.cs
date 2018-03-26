@@ -5,6 +5,10 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 
 
+/**
+ * MessageBoxEx类
+ * @author 百度例子
+ */
 public class MessageBoxEx
 {
     private static IWin32Window _owner;

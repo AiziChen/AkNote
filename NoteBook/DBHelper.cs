@@ -16,12 +16,14 @@ namespace NoteBook
     {
         private DBHelper() { }
 
+        // 首笔记项处于笔记列表的最顶端，它没有属于任何的父笔记项
+        // 没有父笔记项
         public static readonly string NO_BELONG = "-1";
 
         private static SQLiteConnection connection;
         private static SQLiteCommand cmd;
         //
-        // Get DB connection
+        // Get DB connection, then return its command
         //
         public static SQLiteCommand GetCommand()
         {
@@ -35,7 +37,7 @@ namespace NoteBook
             return cmd;
         }
         //
-        // Create tables
+        // Create tables: if not exist
         //
         public static void CreateTables()
         {
@@ -50,7 +52,7 @@ namespace NoteBook
             cmd.ExecuteNonQuery();
         }
         //
-        // Add note
+        // Add a note
         //
         public static void AddNote(string title, string content, string parentId = "-1", DateTime date = new DateTime()
             , DateTime visitDate = new DateTime(), bool encrypted = false)
@@ -102,7 +104,7 @@ namespace NoteBook
         }
 
         //
-        // title get content
+        // Base title get content
         //
         public static string GetContent(string title)
         {
@@ -112,6 +114,27 @@ namespace NoteBook
             while (reader.Read())
             {
                 if (((string)reader["标题"]).Equals(title))
+                {
+                    string result = reader["内容"].ToString();
+                    reader.Close();
+                    return result;
+                }
+            }
+            reader.Close();
+
+            return "";
+        }
+        //
+        // Base ID get content
+        //
+        public static string GetContent(int id)
+        {
+            SQLiteCommand cmd = GetCommand();
+            cmd.CommandText = "select * from Notebook";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                if (((long)reader["编号"]) == id)
                 {
                     string result = reader["内容"].ToString();
                     reader.Close();

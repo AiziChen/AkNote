@@ -6,6 +6,10 @@ using System.Windows.Forms;
 
 namespace NoteBook
 {
+    /**
+     * 程序主入口
+     * @author QuanyeChen
+     */ 
     static class Program
     {
         /// <summary>

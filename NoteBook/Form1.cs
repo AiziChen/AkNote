@@ -1,29 +1,27 @@
-﻿using System;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 
-using CefSharp;
-using CefSharp.WinForms;
-using System.Threading;
-using System.Web;
-/**
- * @author QuanyeChen
- * NoteBook主页
- */
 namespace NoteBook
 {
+    /**
+     * AKBook主界面
+     * @author QuanyeChen
+     */
     public partial class Form1 : Form
     {
-
+        // 窗口
         private FormNewNote newNote = new FormNewNote();
         private FormModifyNoteName modifyNote = new FormModifyNoteName();
         private FloatForm floatForm;
+        // Chromminum浏览器实例
+        public ChromiumWebBrowser browser;
+
         public Form1()
         {
             InitializeComponent();
@@ -63,8 +61,6 @@ namespace NoteBook
             base.WndProc(ref m);
         }
 
-        // Chromminum浏览器实例
-        public ChromiumWebBrowser browser;
         // 窗口加载时执行
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -84,6 +80,7 @@ namespace NoteBook
             floatForm.Show();
         }
         
+        // 实现搜索
         private void buttonSearch_Click(object sender, EventArgs e)
         {
         }
@@ -93,6 +90,7 @@ namespace NoteBook
             NewNote();
         }
 
+        // 新建一个根Note
         public void NewNote()
         {
             newNote.isNewNodeItem = false;
@@ -100,6 +98,7 @@ namespace NoteBook
             newNote.ShowDialog();
         }
 
+        // 新建一个父Note的子Note
         public void NewSonNote()
         {
             newNote.isNewNodeItem = true;
@@ -107,7 +106,7 @@ namespace NoteBook
             newNote.ShowDialog();
         }
         
-        // 暴露Push方法给JS调用，来存储编辑器内容到数据库
+        // 暴露Push方法给JS脚本调用，用来存储编辑器内容到数据库
         public void Push(string content)
         {
             noteList.Invoke(new Action(() =>
@@ -131,7 +130,8 @@ namespace NoteBook
                 DBHelper.UpdateNote(noteList.SelectedNode.Text, content);
             }
         }
-
+        
+        // 列表的右键修改菜单
         private void 修改ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             modifyNote.form1 = this;
@@ -139,23 +139,24 @@ namespace NoteBook
             modifyNote.ShowDialog();
         }
 
+        // 列表的右键删除改菜单
         private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (noteList.SelectedNode != null)
             {
-                ListHelper.result.Clear();
-                List<TreeNode> sonNodes = ListHelper.GetAllNodeTag(noteList.SelectedNode);
+                List<TreeNode> sonNodes = ListHelper.allNodes;
                 for (int i = 0; i < sonNodes.Count; ++i)
                 {
                     DBHelper.RemoveNote(sonNodes[i].Text);
-                    ListHelper.totalTitles
-                        .Remove(ListHelper.GetNoteFromTitle(sonNodes[i].Text));
-                    ListHelper.allNode.Remove(sonNodes[i]);
+                    ListHelper.totalNotes
+                        .Remove(ListHelper.GetNoteById( ((Tags)sonNodes[i].Tag).id ));
+                    ListHelper.allNodes.Remove(sonNodes[i]);
                 }
                 noteList.Nodes.Remove(sonNodes[0]);
             }
         }
 
+        // 当右键按下并松开后，会执行此监听方法，此方法在Form设计器中已经设定绑定到了右键松开的监听器
         private void noteList_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -172,6 +173,7 @@ namespace NoteBook
             noteList.Refresh();
         }
 
+        // 窗口关闭时的监听方法
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             // 不关闭窗口
@@ -180,12 +182,13 @@ namespace NoteBook
             this.Hide();
         }
 
+        // 列表被点击时的监听方法
         private void noteList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Node != null)
             {
-                string title = e.Node.Text;
-                string content = DBHelper.GetContent(title);
+                Tags tags = (Tags)e.Node.Tag;
+                string content = DBHelper.GetContent(tags.id);
                 content = HttpUtility.UrlEncode(content);
                 browser.ExecuteScriptAsync("setHtml('" + content + "');");
             }
