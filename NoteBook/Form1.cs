@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 
-namespace NoteBook
+namespace AkNote
 {
     /**
      * AKBook主界面

@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace NoteBook
+namespace AkNote
 {
     /**
      * 快捷键的绑定

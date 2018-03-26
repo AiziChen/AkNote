@@ -1,4 +1,4 @@
-﻿namespace NoteBook
+﻿namespace AkNote
 {
     partial class FormNewNote
     {

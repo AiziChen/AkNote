@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NoteBook
+namespace AkNote
 {
     /**
      * 程序主入口

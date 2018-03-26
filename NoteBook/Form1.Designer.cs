@@ -1,4 +1,4 @@
-﻿namespace NoteBook
+﻿namespace AkNote
 {
     partial class Form1
     {
@@ -274,7 +274,7 @@
             // 关于ToolStripMenuItem1
             // 
             this.关于ToolStripMenuItem1.Name = "关于ToolStripMenuItem1";
-            this.关于ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.关于ToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
             this.关于ToolStripMenuItem1.Text = "关于";
             this.关于ToolStripMenuItem1.Click += new System.EventHandler(this.关于ToolStripMenuItem1_Click);
             // 
@@ -306,7 +306,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Text = "NoteBook";
+            this.Text = "AkNote";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuStrip1.ResumeLayout(false);

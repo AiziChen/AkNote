@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace NoteBook
+namespace AkNote
 {
     /**
      * 修改笔记项的名字的窗口

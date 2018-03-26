@@ -1,4 +1,4 @@
-﻿namespace NoteBook
+﻿namespace AkNote
 {
     partial class FloatForm
     {
@@ -70,7 +70,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Highlight;
-            this.BackgroundImage = global::NoteBook.Properties.Resources.float_button;
+            this.BackgroundImage = global::AkNote.Properties.Resources.float_button;
             this.ClientSize = new System.Drawing.Size(103, 57);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

@@ -7,7 +7,7 @@ using System.Data.SQLite;
 using System.Data.Common;
 using System.Windows.Forms;
 
-namespace NoteBook
+namespace AkNote
 {
     /// <summary>
     /// DAO层组件

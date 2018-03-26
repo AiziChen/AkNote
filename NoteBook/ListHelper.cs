@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace NoteBook
+namespace AkNote
 {
     /*
      * 一个笔记项对象

@@ -1,4 +1,4 @@
-﻿namespace NoteBook
+﻿namespace AkNote
 {
     partial class HelpForm
     {
@@ -66,11 +66,11 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(269, 38);
             this.label2.TabIndex = 2;
-            this.label2.Text = "- 作者：陈权业\r\n- 软件性质：开源自由软件，基于APL 2.0";
+            this.label2.Text = "- 作者：陈权业\r\n- 软件性质：开源自由软件，基于Apache-2.0";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::NoteBook.Properties.Resources.NoteBook_Logo;
+            this.pictureBox1.Image = global::AkNote.Properties.Resources.NoteBook_Logo;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(1, -4);
             this.pictureBox1.Name = "pictureBox1";

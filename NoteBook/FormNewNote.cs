@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace NoteBook
+namespace AkNote
 {
     public partial class FormNewNote : Form
     {
