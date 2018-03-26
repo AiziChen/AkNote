@@ -12,7 +12,10 @@ using CefSharp;
 using CefSharp.WinForms;
 using System.Threading;
 using System.Web;
-
+/**
+ * @author QuanyeChen
+ * NoteBook主页
+ */
 namespace NoteBook
 {
     public partial class Form1 : Form
@@ -60,13 +63,17 @@ namespace NoteBook
             base.WndProc(ref m);
         }
 
+        // Chromminum浏览器实例
         public ChromiumWebBrowser browser;
-
+        // 窗口加载时执行
         private void Form1_Load(object sender, EventArgs e)
         {
             CefSettings settings = new CefSettings();
             Cef.Initialize(settings);
-            browser = new ChromiumWebBrowser(AppDomain.CurrentDomain.BaseDirectory + "\\tinymce\\editor.html");
+            // 发布版本的绝对路径
+            //browser = new ChromiumWebBrowser(AppDomain.CurrentDomain.BaseDirectory + "\\tinymce\\editor.html");
+            // 测试版本的绝对路径
+            browser = new ChromiumWebBrowser(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\tinymce\\editor.html");
             this.browserPanel.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;
 

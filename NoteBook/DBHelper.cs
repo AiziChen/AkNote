@@ -14,6 +14,8 @@ namespace NoteBook
     /// </summary>
     public class DBHelper
     {
+        private DBHelper() { }
+
         public static readonly string NO_BELONG = "-1";
 
         private static SQLiteConnection connection;
