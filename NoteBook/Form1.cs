@@ -67,9 +67,9 @@ namespace AkNote
             CefSettings settings = new CefSettings();
             Cef.Initialize(settings);
             // 发布版本的绝对路径
-            //browser = new ChromiumWebBrowser(AppDomain.CurrentDomain.BaseDirectory + "\\tinymce\\editor.html");
+            browser = new ChromiumWebBrowser(AppDomain.CurrentDomain.BaseDirectory + "\\tinymce\\editor.html");
             // 测试版本的绝对路径
-            browser = new ChromiumWebBrowser(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\tinymce\\editor.html");
+            //browser = new ChromiumWebBrowser(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\tinymce\\editor.html");
             this.browserPanel.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;
 
