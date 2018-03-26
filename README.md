@@ -3,6 +3,6 @@ A WYSIWYG rich editor notepad for computer science, teacher, author and all kind
 
 ## ScreenShot
 ### Main Window
-![main_window](https://github.com/AiziChen/AkNote/screeshot/screenshot_main2.png)
+![main_window](https://github.com/AiziChen/AkNote/blob/master/screenshot/screenshot_main2.png)
 ### Information And Help
-![information](https://github.com/AiziChen/AkNote/screenshot/screeshot_inf.png)
+![information](https://github.com/AiziChen/AkNote/blob/master/screenshot/screenshot_inf.png)
