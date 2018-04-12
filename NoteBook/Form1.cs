@@ -67,9 +67,9 @@ namespace AkNote
             CefSettings settings = new CefSettings();
             Cef.Initialize(settings);
             // 发布版本的绝对路径
-            browser = new ChromiumWebBrowser(AppDomain.CurrentDomain.BaseDirectory + "\\tinymce\\editor.html");
+            //browser = new ChromiumWebBrowser(AppDomain.CurrentDomain.BaseDirectory + "\\tinymce\\editor.html");
             // 测试版本的绝对路径
-            //browser = new ChromiumWebBrowser(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\tinymce\\editor.html");
+            browser = new ChromiumWebBrowser(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\tinymce\\editor.html");
             this.browserPanel.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;
 
@@ -111,8 +111,12 @@ namespace AkNote
         {
             noteList.Invoke(new Action(() =>
             {
-                if (noteList.SelectedNode == null) return;
-                DBHelper.UpdateNote(noteList.SelectedNode.Text, content);
+                if (noteList.SelectedNode == null)
+                {
+                    return;
+                }
+                Tags tags = (Tags)noteList.SelectedNode.Tag;
+                DBHelper.ModifyContent(tags.id, content);
             }));
         }
 
@@ -127,7 +131,8 @@ namespace AkNote
             if (response.Result.Result != null)
             {
                 string content = response.Result.Result.ToString();
-                DBHelper.UpdateNote(noteList.SelectedNode.Text, content);
+                Tags tags = (Tags)noteList.SelectedNode.Tag;
+                DBHelper.ModifyContent(tags.id, content);
             }
         }
         
@@ -139,20 +144,16 @@ namespace AkNote
             modifyNote.ShowDialog();
         }
 
-        // 列表的右键删除改菜单
+        // 列表的右键删除菜单
         private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (noteList.SelectedNode != null)
             {
-                List<TreeNode> sonNodes = ListHelper.allNodes;
-                for (int i = 0; i < sonNodes.Count; ++i)
-                {
-                    DBHelper.RemoveNote(sonNodes[i].Text);
-                    ListHelper.totalNotes
-                        .Remove(ListHelper.GetNoteById( ((Tags)sonNodes[i].Tag).id ));
-                    ListHelper.allNodes.Remove(sonNodes[i]);
-                }
-                noteList.Nodes.Remove(sonNodes[0]);
+                TreeNode selectedNode = noteList.SelectedNode;
+                // 删除此节点的所有子节点
+                ListHelper.RemoveNode(selectedNode);
+                // 在noteList中只需删除此节点，即可删除其所有的子节点
+                noteList.SelectedNode.Remove();
             }
         }
 

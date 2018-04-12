@@ -20,22 +20,16 @@ namespace AkNote
         private void buttonModifyNote_Click(object sender, EventArgs e)
         {
             string newTitle = textBoxModifyNote.Text;
-            if (newTitle.Equals(""))
+            if (newTitle.Trim().Equals(""))
             {
                 MessageBoxEx.Show(this, "笔记名为空，请重新输入");
                 return;
             }
-            foreach (var note in ListHelper.totalNotes)
-            {
-                if (note.title.Equals(newTitle))
-                {
-                    MessageBoxEx.Show(this, "含同名笔记，修改失败");
-                    return;
-                }
-            }
-            string preTitle = form1.noteList.SelectedNode.Text;
-            DBHelper.ModifyTitle(preTitle, newTitle);
-            ListHelper.Modify(form1, newTitle);
+            TreeNode selectedNode = form1.noteList.SelectedNode;
+            Tags tags = (Tags)selectedNode.Tag;
+            DBHelper.ModifyTitle(tags.id, newTitle);
+            ListHelper.Modify(tags, newTitle);
+            selectedNode.Text = newTitle;
             this.Close();
         }
 

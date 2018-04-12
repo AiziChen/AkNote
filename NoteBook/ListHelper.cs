@@ -12,7 +12,7 @@ namespace AkNote
         public int id;
         public string title;
         public bool encrypted;
-        public string parentId;
+        public int parentId;
     }
     /* 
      * 提供给TreeNode视图组件的tag标签所需要保存的内容
@@ -20,7 +20,7 @@ namespace AkNote
     public struct Tags
     {
         public int id;
-        public string parentId;
+        public int parentId;
     }
 
 
@@ -50,7 +50,7 @@ namespace AkNote
             }
             Update(form);
         }
-        
+
         // 更新笔记列表
         public static void Update(Form1 form)
         {
@@ -73,7 +73,7 @@ namespace AkNote
                 treeNode.Text = note.title;
                 allNodes.Add(treeNode);
             }
-            
+
             AddNodes(form);
         }
 
@@ -83,7 +83,7 @@ namespace AkNote
             foreach (var node in allNodes)
             {
                 Tags tags = (Tags)node.Tag;
-                if (tags.parentId.Equals(DBHelper.NO_BELONG))
+                if (tags.parentId == DBHelper.NO_BELONG)
                 {
                     // 直接添加作为根笔记项
                     form.noteList.Nodes.Add(node);
@@ -93,7 +93,7 @@ namespace AkNote
                 }
 
             }
-            
+
         }
 
         // 添加父项的子项
@@ -102,13 +102,13 @@ namespace AkNote
             Tags tags = (Tags)treeNode.Tag;
             for (int i = 0; i < totalNotes.Count; ++i)
             {
-                if (totalNotes[i].id.ToString().Equals(tags.parentId))
+                if (totalNotes[i].id == tags.parentId)
                 {
                     allNodes[i].Nodes.Add(treeNode);
                 }
             }
         }
-        
+
         // 添加一个笔记项（添加至数据库、临时list和视图）
         public static void AddItem(Form1 form1, string newTitle)
         {
@@ -116,7 +116,7 @@ namespace AkNote
             {
                 // 添加至数据库
                 // TODO: 添加Note的方法还未完善，目前只添加了标题和HTML内容
-                DBHelper.AddNote(newTitle, NEW_HTML);
+                DBHelper.AddNote(newTitle, NEW_HTML, DBHelper.NO_BELONG);
                 // 添加至临时list
                 Note note = new Note
                 {
@@ -145,7 +145,7 @@ namespace AkNote
                 //form1.noteList.Nodes[newTitle].Tag = note.id.ToString();
             }));
         }
-        
+
         // 对当前选中的Node添加新的子Node
         public static void AddNewNodeItem(Form1 form1, string newTitle)
         {
@@ -157,7 +157,7 @@ namespace AkNote
                 note.title = newTitle;
                 note.id = GetBiggestId() + 1;
                 note.encrypted = false;
-                note.parentId = tags1.id.ToString();
+                note.parentId = tags1.id;
                 totalNotes.Add(note);
 
                 TreeNode treeNode = new TreeNode();
@@ -177,6 +177,33 @@ namespace AkNote
                 //node.Nodes[newTitle].Tag = note.id.ToString();
                 // 添加至数据库
                 DBHelper.AddNote(newTitle, NEW_HTML, note.parentId);
+            }
+        }
+        //
+        // 删除该节点及其所有的子节点
+        //
+        public static void RemoveNode(TreeNode parentNode)
+        {
+            if (parentNode != null)
+            {
+                Tags parentTags = (Tags)parentNode.Tag;
+                TreeNodeCollection treeNodes = parentNode.Nodes;
+                for (int i = 0; i < treeNodes.Count; ++i)
+                {
+                    // 如果有还有子node
+                    if (treeNodes.Count > 0)
+                    {
+                        ListHelper.RemoveNode(treeNodes[i]);
+                    }
+                    // 删除此节点
+                    DBHelper.RemoveNote(parentTags.id);
+                    ListHelper.totalNotes.Remove(ListHelper.GetNoteById(parentTags.id));
+                    ListHelper.allNodes.Remove(parentNode);
+                }
+                // 直接删除当前节点
+                DBHelper.RemoveNote(parentTags.id);
+                ListHelper.totalNotes.Remove(ListHelper.GetNoteById(parentTags.id));
+                ListHelper.allNodes.Remove(parentNode);
             }
         }
 
@@ -201,13 +228,10 @@ namespace AkNote
         }
 
         // 修改某笔记项
-        public static void Modify(Form1 form1, string newTitle)
+        public static void Modify(Tags tags, string newTitle)
         {
-            TreeNode selectedNode = form1.noteList.SelectedNode;
-            
             for (int i = 0; i < totalNotes.Count; ++i)
             {
-                Tags tags = (Tags)selectedNode.Tag;
                 if (totalNotes[i].id.ToString()
                     .Equals(tags.parentId))
                 {
@@ -220,8 +244,6 @@ namespace AkNote
                     };
 
                     totalNotes[i] = note;
-                    
-                    selectedNode.Text = newTitle;
                 }
             }
             

@@ -16,7 +16,7 @@ namespace AkNote
         private void buttonNewNote_Click(object sender, EventArgs e)
         {
             string noteTitle = textBoxNewNote.Text;
-            if (noteTitle.Equals(""))
+            if (noteTitle.Trim().Equals(""))
             {
                 MessageBoxEx.Show(this, "笔记名为空，无法新建");
                 return;
