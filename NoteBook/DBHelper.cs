@@ -29,7 +29,7 @@ namespace AkNote
         {
             if (connection == null)
             {
-                connection = new SQLiteConnection("Data Source=C:\\Users\\Administrator\\Desktop\\note.db;Version=3;New=True;Compress=True;");
+                connection = new SQLiteConnection("Data Source=.\\note.db;Version=3;New=True;Compress=True;");
                 connection.Open();
                 cmd = connection.CreateCommand();
             }

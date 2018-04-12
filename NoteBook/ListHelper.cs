@@ -112,38 +112,31 @@ namespace AkNote
         // 添加一个笔记项（添加至数据库、临时list和视图）
         public static void AddItem(Form1 form1, string newTitle)
         {
-            form1.noteList.Invoke(new Action(() =>
+            // 添加至临时list
+            Note note = new Note
             {
-                // 添加至数据库
-                // TODO: 添加Note的方法还未完善，目前只添加了标题和HTML内容
-                DBHelper.AddNote(newTitle, NEW_HTML, DBHelper.NO_BELONG);
-                // 添加至临时list
-                Note note = new Note
-                {
-                    title = newTitle,
-                    id = GetBiggestId(),
-                    encrypted = false,
-                    parentId = DBHelper.NO_BELONG
-                };
-                totalNotes.Add(note);
-                TreeNode treeNode = new TreeNode();
-                Tags tags = new Tags
-                {
-                    id = note.id,
-                    parentId = note.parentId
-                };
-                treeNode.Tag = tags;
-                treeNode.Text = note.title;
-                allNodes.Add(treeNode);
+                title = newTitle,
+                id = GetBiggestId() + 1,
+                encrypted = false,
+                parentId = DBHelper.NO_BELONG
+            };
+            totalNotes.Add(note);
 
-                // 添加到视图
-                form1.noteList.Nodes.Add(treeNode);
+            TreeNode treeNode = new TreeNode();
+            Tags tags = new Tags
+            {
+                id = note.id,
+                parentId = note.parentId
+            };
+            treeNode.Tag = tags;
+            treeNode.Text = note.title;
+            allNodes.Add(treeNode);
 
-                // 添加到视图（淘汰）
-                //form1.noteList.Nodes.Add(newTitle, newTitle);
-                // 将id和parentId保存到视图中
-                //form1.noteList.Nodes[newTitle].Tag = note.id.ToString();
-            }));
+            // 添加到视图
+            form1.noteList.Nodes.Add(treeNode);
+            // 添加至数据库
+            // TODO: 添加Note的方法还未实现加密功能
+            DBHelper.AddNote(newTitle, NEW_HTML, DBHelper.NO_BELONG);
         }
 
         // 对当前选中的Node添加新的子Node
@@ -172,10 +165,8 @@ namespace AkNote
 
                 // 添加至视图
                 node.Nodes.Add(treeNode);
-                // 淘汰
-                //node.Nodes.Add(newTitle, newTitle);
-                //node.Nodes[newTitle].Tag = note.id.ToString();
                 // 添加至数据库
+                // TODO: 添加Note的方法还未实现加密功能
                 DBHelper.AddNote(newTitle, NEW_HTML, note.parentId);
             }
         }
