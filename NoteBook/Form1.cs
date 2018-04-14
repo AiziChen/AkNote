@@ -67,6 +67,7 @@ namespace AkNote
                             } else
                             {
                                 textBoxSearch.Focus();
+                                textBoxSearch.SelectAll();
                             }
                             break;
                     }
@@ -252,7 +253,13 @@ namespace AkNote
                 content = HttpUtility.UrlEncode(content);
                 browser.ExecuteScriptAsync("setHtml('" + content + "');");
 
-                expandedList.Add(e.Node);
+                if (e.Node.IsExpanded)
+                {
+                    expandedList.Add(e.Node);
+                } else
+                {
+                    expandedList.Remove(e.Node);
+                }
             }
         }
 
@@ -278,6 +285,11 @@ namespace AkNote
                 // 搜索
                 buttonSearch_Click(sender, e);
             }
+        }
+
+        private void textBoxSearch_Click(object sender, EventArgs e)
+        {
+            textBoxSearch.SelectAll();
         }
     }
 }

@@ -163,6 +163,7 @@
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(150, 21);
             this.textBoxSearch.TabIndex = 3;
+            this.textBoxSearch.Click += new System.EventHandler(this.textBoxSearch_Click);
             this.textBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearch_KeyPress);
             // 
             // buttonSearch
