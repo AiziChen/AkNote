@@ -21,6 +21,10 @@ namespace AkNote
         private FloatForm floatForm;
         // Chromminum浏览器实例
         public ChromiumWebBrowser browser;
+        // 所有已经展开的项
+        private List<TreeNode> expandedList = new List<TreeNode>();
+        // 保存已经搜索出来的并处于展开状态的所有id
+        private List<TreeNode> searchedExpanded = new List<TreeNode>();
 
         public Form1()
         {
@@ -34,6 +38,7 @@ namespace AkNote
             // Register the hotkey
             //注册热键Alt+Q，Id号为100。HotKey.KeyModifiers.Alt也可以直接使用数字4来表示。   
             HotKey.RegisterHotKey(Handle, 100, HotKey.KeyModifiers.Alt, Keys.Q);
+            HotKey.RegisterHotKey(Handle, 200, HotKey.KeyModifiers.Ctrl, Keys.L);
         }
         //
         // 处理热键
@@ -53,6 +58,15 @@ namespace AkNote
                             } else
                             {
                                 this.Show();
+                            }
+                            break;
+                        case 200:   // 按下的是ctrl+L
+                            if (textBoxSearch.Focused)
+                            {
+                                browser.Focus();
+                            } else
+                            {
+                                textBoxSearch.Focus();
                             }
                             break;
                     }
@@ -78,11 +92,56 @@ namespace AkNote
             // 创建并显示浮动窗口
             floatForm = new FloatForm(this);
             floatForm.Show();
+            // 为textBoxSearch设置hint
+            Win32Utility.SetCueText(textBoxSearch, "搜索...");
         }
         
         // 实现搜索
         private void buttonSearch_Click(object sender, EventArgs e)
         {
+            if (buttonSearch.Text.Equals("搜索"))
+            {
+                // 搜索匹配的所有节点，并展开这些节点的所有父节点并用某种颜色对其进行标识
+                String searchName = textBoxSearch.Text;
+                List<int> ids = ListHelper.SearchResult(searchName);
+
+                // 改回原色并关闭节点
+                foreach (var node in searchedExpanded)
+                {
+                    node.ForeColor = Color.Magenta;
+                    if (!expandedList.Contains(node))
+                    {
+                        node.Collapse();
+                    }
+                }
+                // 清楚集合
+                searchedExpanded.Clear();
+
+                // 若无搜索结果，则直接返回
+                if (ids.Count <= 0)
+                {
+                    return;
+                }
+
+                // 展开节点的所有父节点并改变其颜色，然后保存其id至一集合
+                foreach (var node in ListHelper.allNodes)
+                {
+                    Tags tags = (Tags)node.Tag;
+                    foreach (var id in ids)
+                    {
+                        if (id == tags.id)
+                        {
+                            // 展开该节点的所有父节点
+                            ListHelper.expandAllParent(node);
+                            // 改变其字体颜色以示区别
+                            node.ForeColor = Color.Red;
+                            // 保存到集合
+                            searchedExpanded.Add(node);
+                        }
+                    }
+                }
+            }
+            
         }
 
         private void 新建ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -192,6 +251,8 @@ namespace AkNote
                 string content = DBHelper.GetContent(tags.id);
                 content = HttpUtility.UrlEncode(content);
                 browser.ExecuteScriptAsync("setHtml('" + content + "');");
+
+                expandedList.Add(e.Node);
             }
         }
 
@@ -204,6 +265,19 @@ namespace AkNote
         {
             HelpForm form = new HelpForm();
             form.ShowDialog();
+        }
+
+        // textBoxSearch的按键事件
+        private void textBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Enter事件
+            if (e.KeyChar == System.Convert.ToChar(13))
+            {
+                // 取消按下返回键时的“噔”响声
+                e.Handled = true;
+                // 搜索
+                buttonSearch_Click(sender, e);
+            }
         }
     }
 }

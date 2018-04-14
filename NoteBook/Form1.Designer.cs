@@ -158,11 +158,12 @@
             // 
             // textBoxSearch
             // 
-            this.textBoxSearch.ForeColor = System.Drawing.Color.Red;
+            this.textBoxSearch.ForeColor = System.Drawing.Color.Black;
             this.textBoxSearch.Location = new System.Drawing.Point(0, 27);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(150, 21);
             this.textBoxSearch.TabIndex = 3;
+            this.textBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearch_KeyPress);
             // 
             // buttonSearch
             // 

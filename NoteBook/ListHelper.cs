@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace AkNote
 {
@@ -239,8 +240,9 @@ namespace AkNote
             }
             
         }
-
+        //
         // 工具类：通过Id来获得指定的Note
+        //
         public static Note GetNoteById(int id)
         {
             foreach (var note in totalNotes)
@@ -252,5 +254,40 @@ namespace AkNote
             }
             return new Note();
         }
+        //
+        // 展开该节点的所有父节点
+        //
+        public static void expandAllParent(TreeNode node)
+        {
+            // 若找不到该节点的父节点，就会返回null
+            // 展开该节点的子节点
+            if (node.Parent == null)
+            {
+                node.Expand();
+            } else
+            {
+                expandAllParent(node.Parent);
+                node.Expand();
+            }
+        }
+
+        //
+        // 返回找到的text为name的TreeNode的id集合
+        //
+        public static List<int> SearchResult(string name)
+        {
+            List<int> result = new List<int>();
+            foreach (var node in allNodes)
+            {
+                if (name.Trim() != "" && node.Text.ToLower()
+                    .Contains(name.ToLower()))
+                {
+                    Tags tags = (Tags)node.Tag;
+                    result.Add(tags.id);
+                }
+            }
+            return result;
+        }
+
     }
 }

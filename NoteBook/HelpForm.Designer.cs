@@ -42,7 +42,7 @@
             this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(236, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(442, 224);
+            this.label1.Size = new System.Drawing.Size(442, 238);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -64,7 +64,7 @@
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(243, 271);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(269, 38);
+            this.label2.Size = new System.Drawing.Size(295, 38);
             this.label2.TabIndex = 2;
             this.label2.Text = "- 作者：陈权业\r\n- 软件性质：开源自由软件，基于Apache-2.0";
             // 

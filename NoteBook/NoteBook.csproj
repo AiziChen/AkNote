@@ -159,6 +159,7 @@
     <Compile Include="MessageBoxEx.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32Utility.cs" />
     <EmbeddedResource Include="FloatForm.resx">
       <DependentUpon>FloatForm.cs</DependentUpon>
     </EmbeddedResource>
