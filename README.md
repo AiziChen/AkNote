@@ -1,5 +1,5 @@
 # AkNote
-一款所见即所得的富文本编辑器，适用于编程工作者、教师、作家等等...（A WYSIWYG rich editor notepad for computer science, teacher, author and all kinds of peolpe(AKO).) 
+一款所见即所得的富文本编辑器，适用于编程工作者、教师、作家等等...（A WYSIWYG rich notepad for computer science, teacher, author and all kinds of peolpe(AKO).) 
 ### 其特色之处在于：
 0. 开源，下载和使用都是免费的；
 1. 其具有类Word一样的所见即得的界面；
@@ -14,7 +14,7 @@
 缺点：只能在Windows平台下使用。
 
 ## 使用方法 - Usage
-1. 下载并安装Visual Studio 2017（低版本未测试)
+1. 下载并安装Visual Studio 2017（低版本未测试）
 2. git clone本仓库到指定目录
 3. 使用Visual Studio打开该项目
 4. 安装Nuget插件（如果没有）
