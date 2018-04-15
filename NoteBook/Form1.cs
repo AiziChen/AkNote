@@ -350,19 +350,8 @@ namespace AkNote
                     writer.Write(content);
                 }
 
-                // 保存css和js
-                string srcDir = path + "\\resources";
-                if (!Directory.Exists(srcDir + "\\css"))
-                {
-                    Directory.CreateDirectory(srcDir + "\\css");
-                }
-                if (!Directory.Exists(srcDir + "\\js"))
-                {
-                    Directory.CreateDirectory(srcDir + "\\js");
-                }
-                // 复制
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\css\\prism.css", srcDir + "\\css\\prism.css", true);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\js\\prism.js", srcDir + "\\js\\prism.js", true);
+                // 复制CSS和JS文件
+                SaveCSSAndJSFile(path);
 
                 writer.Close();
                 
@@ -403,14 +392,31 @@ namespace AkNote
                 Tags tags = (Tags)childNode.Tag;
                 String content = DBHelper.GetContent(tags.id);
                 content = BASE_HTML_HEAD + childNode.Text + BASE_HTML_MIDDLE + content + BASE_HTML_FOOT;
-                writer.WriteAsync(content);
+                writer.Write(content);
                 writer.Close();
-
+                
                 if (childNode.Parent != null)
                 {
                     saveAllSonNode(childNode, basePath);
+                    // 复制CSS和JS文件
+                    SaveCSSAndJSFile(basePath);
                 }
             }
         }
+
+        private static void SaveCSSAndJSFile(string path) { 
+                // 保存css和js
+                string srcDir = path + "\\resources";
+                if (!Directory.Exists(srcDir + "\\css"))
+                {
+                    Directory.CreateDirectory(srcDir + "\\css");
+                }
+                if (!Directory.Exists(srcDir + "\\js"))
+                {
+                    Directory.CreateDirectory(srcDir + "\\js");
+                }
+                // 复制
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\css\\prism.css", srcDir + "\\css\\prism.css", true);
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\js\\prism.js", srcDir + "\\js\\prism.js", true);}
     }
 }
