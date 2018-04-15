@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AkNote
 {
@@ -282,7 +283,6 @@ namespace AkNote
             {
                 // 取消按下返回键时的“噔”响声
                 e.Handled = true;
-                // 搜索
                 buttonSearch_Click(sender, e);
             }
         }
@@ -290,6 +290,127 @@ namespace AkNote
         private void textBoxSearch_Click(object sender, EventArgs e)
         {
             textBoxSearch.SelectAll();
+        }
+
+        private readonly static string BASE_HTML_HEAD = "<!DOCTYPE html>\r\n" +
+            "<html lang=\"zh\">\r\n" +
+            "<head>\r\n" +
+            "    <meta charset=\"UTF-8\">\r\n" +
+            "    <meta name=\"viewport\"\r\n" +
+            "          content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">\r\n" +
+            "    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\r\n" +
+            "    <title>";
+        private readonly static string BASE_HTML_MIDDLE = "</title>\r\n" +
+            "	<link href=\"./resources/css/prism.css\" rel=\"stylesheet\" />\r\n" +
+            "</head>\r\n" +
+            "<body>";
+        private readonly static string BASE_HTML_FOOT = "	<script src=\"./resources/js/prism.js\"></script>\r\n" +
+            "</body>\r\n" +
+            "</html>";
+        // 导出选定的笔记项及其子项为HTML文件
+        private void 导出选中笔记ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+
+            if (folderDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            TreeNode selectedNode = noteList.SelectedNode;
+            if (selectedNode == null)
+            {
+                MessageBox.Show("没有选中笔记");
+                return;
+            }
+
+            String path = folderDialog.SelectedPath + "\\AkNote";
+            if (File.Exists(path))
+            {
+                MessageBox.Show("导出失败，因为所选择的路径中已经存在\"AkNote\"文件！");
+                return;
+            }
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            if (Directory.Exists(path))
+            {
+                // 以UTF-8的编码方式保存
+                string fileName = path + "\\" + selectedNode.Text + ".html";
+                StreamWriter writer = new StreamWriter(fileName, false, System.Text.Encoding.UTF8);
+
+                Task<JavascriptResponse> response = browser.EvaluateScriptAsync("getHtml();");
+                response.Wait();
+                if (response.Result.Result != null)
+                {
+                    string content = BASE_HTML_HEAD + selectedNode.Text + BASE_HTML_MIDDLE + response.Result.Result.ToString() + BASE_HTML_FOOT;
+                    writer.Write(content);
+                }
+
+                // 保存css和js
+                string srcDir = path + "\\resources";
+                if (!Directory.Exists(srcDir + "\\css"))
+                {
+                    Directory.CreateDirectory(srcDir + "\\css");
+                }
+                if (!Directory.Exists(srcDir + "\\js"))
+                {
+                    Directory.CreateDirectory(srcDir + "\\js");
+                }
+                // 复制
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\css\\prism.css", srcDir + "\\css\\prism.css", true);
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\js\\prism.js", srcDir + "\\js\\prism.js", true);
+
+                writer.Close();
+                
+                // 连同这个笔记项的所有子项也一起保存
+                saveAllSonNode(selectedNode, path);
+
+                // 提示框
+                MessageBox.Show("笔记导出成功!");
+            } else
+            {
+                MessageBox.Show("文件路径无效!");
+            }
+        }
+
+        // 保存所有的字Node
+        private static void saveAllSonNode(TreeNode node, String basePath)
+        {
+            TreeNodeCollection childNodes = node.Nodes;
+            if (childNodes.Count <= 0)
+            {
+                return;
+            }
+            
+            // 创建子目录
+            basePath = basePath + "\\" + node.Text;
+            if (!Directory.Exists(basePath) || !File.Exists(basePath))
+            {
+                Directory.CreateDirectory(basePath);
+            }
+
+            // 保存所有的笔记条目到相应的文件
+            for (int i = 0; i < childNodes.Count; ++i)
+            {
+                TreeNode childNode = childNodes[i];
+                string file = basePath + "\\" + childNode.Text + ".html";
+                StreamWriter writer = new StreamWriter(file, false, System.Text.Encoding.UTF8);
+
+                Tags tags = (Tags)childNode.Tag;
+                String content = DBHelper.GetContent(tags.id);
+                content = BASE_HTML_HEAD + childNode.Text + BASE_HTML_MIDDLE + content + BASE_HTML_FOOT;
+                writer.WriteAsync(content);
+                writer.Close();
+
+                if (childNode.Parent != null)
+                {
+                    saveAllSonNode(childNode, basePath);
+                }
+            }
         }
     }
 }

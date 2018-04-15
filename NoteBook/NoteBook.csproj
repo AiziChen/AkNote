@@ -220,6 +220,12 @@
     <None Include="Resources\float_button.jpg" />
     <None Include="Resources\NoteBook_Logo.ico" />
     <None Include="Resources\NoteBook_Logo.png" />
+    <Content Include="html_output\resources\css\prism.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="html_output\resources\js\prism.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="tinymce\jquery.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
