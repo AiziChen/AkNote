@@ -76,7 +76,7 @@ namespace AkNote
         {
             List<Note> result = new List<Note>();
             SQLiteCommand cmd = GetCommand();
-            cmd.CommandText = "select * from Notebook";
+            cmd.CommandText = "SELECT * FROM Notebook";
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -100,20 +100,20 @@ namespace AkNote
         public static string GetContent(int id)
         {
             SQLiteCommand cmd = GetCommand();
-            cmd.CommandText = "select * from Notebook";
+            cmd.CommandText = "SELECT * FROM Notebook WHERE 编号 = @ID";
+            cmd.Parameters.Add(new SQLiteParameter("@ID", id));
             SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            if (reader.Read())
             {
-                if (((long)reader["编号"]) == id)
-                {
-                    string result = reader["内容"].ToString();
-                    reader.Close();
-                    return result;
-                }
+                string result = reader["内容"].ToString();
+                reader.Close();
+                return result;
             }
-            reader.Close();
-
-            return "";
+            else
+            {
+                reader.Close();
+                return "";
+            }
         }
         //
         // Delete note by id
@@ -121,8 +121,8 @@ namespace AkNote
         public static void RemoveNote(int id)
         {
             SQLiteCommand cmd = GetCommand();
-            cmd.CommandText = "DELETE FROM Notebook WHERE 编号=@id";
-            cmd.Parameters.Add(new SQLiteParameter("@id", id));
+            cmd.CommandText = "DELETE FROM Notebook WHERE 编号=@ID";
+            cmd.Parameters.Add(new SQLiteParameter("@ID", id));
             cmd.ExecuteNonQuery();
         }
 
@@ -132,9 +132,9 @@ namespace AkNote
         public static void ModifyTitle(int id, string newTitle)
         {
             SQLiteCommand cmd = GetCommand();
-            cmd.CommandText = "UPDATE Notebook SET 标题=@newTitle where 编号=@id";
+            cmd.CommandText = "UPDATE Notebook SET 标题=@newTitle WHERE 编号=@ID";
             cmd.Parameters.Add(new SQLiteParameter("@newTitle", newTitle));
-            cmd.Parameters.Add(new SQLiteParameter("@id", id));
+            cmd.Parameters.Add(new SQLiteParameter("@ID", id));
             cmd.ExecuteNonQuery();
         }
         //
@@ -143,11 +143,32 @@ namespace AkNote
         internal static void ModifyContent(int id, string content)
         {
             SQLiteCommand cmd = GetCommand();
-            cmd.CommandText = "UPDATE Notebook SET 内容=@content WHERE 编号=@id";
+            cmd.CommandText = "UPDATE Notebook SET 内容=@content WHERE 编号=@ID";
             cmd.Parameters.Add(new SQLiteParameter("@content", content));
-            cmd.Parameters.Add(new SQLiteParameter("@id", id));
+            cmd.Parameters.Add(new SQLiteParameter("@ID", id));
             cmd.ExecuteNonQuery();
         }
+
+        //
+        // Get The maximum ID
+        //
+        public static int GetMaxId()
+        {
+            SQLiteCommand cmd = GetCommand();
+            cmd.CommandText = "SELECT MAX(编号) AS 最大编号 FROM Notebook";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.Read()) {
+                int result = Int32.Parse(reader["最大编号"].ToString());
+                reader.Close();
+                return result;
+            }
+            else
+            {
+                reader.Close();
+                return 0;
+            }
+        }
+
         //
         // Close the DB connection
         //

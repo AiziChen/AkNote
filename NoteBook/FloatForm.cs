@@ -10,7 +10,7 @@ namespace AkNote
     // 浮动窗口
     public partial class FloatForm : Form
     {
-        private Form1 form1;
+        private Form1 editWidow;
         private Point ptMouseCurrrnetPos, ptMouseNewPos, ptFormPos, ptFormNewPos;
         private bool blnMouseDown = false;
 
@@ -19,33 +19,43 @@ namespace AkNote
             InitializeComponent();
         }
 
-        public FloatForm(Form1 form1)
+        public FloatForm(Form1 editWidow)
         {
             InitializeComponent();
-            this.form1 = form1;
+            this.editWidow = editWidow;
         }
 
+        /// <summary>
+        /// 双击打开或关闭编辑器主窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FloatForm_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
-            if (form1.Visible)
+            if (editWidow.Visible)
             {
-                form1.Hide();
+                editWidow.Hide();
             }
             else
             {
-                form1.Show();
+                editWidow.Show();
             }
         }
 
         private void 关闭ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            form1.Close();
+            editWidow.Close();
             this.Close();
             // 完全退出程序
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
 
+        /// <summary>
+        /// 实现窗口移动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FloatForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (blnMouseDown)
@@ -59,6 +69,9 @@ namespace AkNote
             }
         }
 
+        /// <summary>
+        /// 获取系统内存
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         public struct MEMORY_INFO
         {
@@ -73,12 +86,21 @@ namespace AkNote
         }
         [DllImport("kernel32")]
         public static extern void GlobalMemoryStatus(ref MEMORY_INFO meminfo);
+
+        /// <summary>
+        /// 窗口加载后启动系统内存监听线程
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FloatForm_Load(object sender, EventArgs e)
         {
             System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(ShowMemoryInfo));
             thread.Start();
         }
 
+        /// <summary>
+        /// 在本窗口中显示内存信息
+        /// </summary>
         private void ShowMemoryInfo()
         {
             while (true)
@@ -99,11 +121,21 @@ namespace AkNote
             
         }
 
+        /// <summary>
+        /// 鼠标移动到窗口时显示的文字
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FloatForm_MouseEnter(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(this, "双击打开或关闭编辑窗口");
         }
 
+        /// <summary>
+        /// 鼠标左键和右键按下的动作监听方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FloatForm_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -119,6 +151,11 @@ namespace AkNote
             }
         }
 
+        /// <summary>
+        /// 鼠标按下时的监听方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FloatForm_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)

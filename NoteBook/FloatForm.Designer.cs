@@ -67,18 +67,19 @@
             // 
             // FloatForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.SystemColors.Highlight;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImage = global::AkNote.Properties.Resources.float_button;
-            this.ClientSize = new System.Drawing.Size(103, 57);
+            this.ClientSize = new System.Drawing.Size(101, 57);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FloatForm";
             this.ShowInTaskbar = false;
             this.Text = "FloatForm";
             this.TopMost = true;
-            this.TransparencyKey = System.Drawing.Color.White;
+            this.TransparencyKey = System.Drawing.SystemColors.ActiveCaption;
             this.Load += new System.EventHandler(this.FloatForm_Load);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.FloatForm_MouseDoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FloatForm_MouseDown);

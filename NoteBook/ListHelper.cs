@@ -117,7 +117,7 @@ namespace AkNote
             Note note = new Note
             {
                 title = newTitle,
-                id = GetBiggestId() + 1,
+                id = DBHelper.GetMaxId() + 1,
                 encrypted = false,
                 parentId = DBHelper.NO_BELONG
             };
@@ -149,7 +149,7 @@ namespace AkNote
                 Tags tags1 = (Tags)node.Tag;
                 Note note = new Note();
                 note.title = newTitle;
-                note.id = GetBiggestId() + 1;
+                note.id = DBHelper.GetMaxId() + 1;
                 note.encrypted = false;
                 note.parentId = tags1.id;
                 totalNotes.Add(note);
@@ -200,24 +200,24 @@ namespace AkNote
         }
 
         // 取得最大笔记项中的最大的ID
-        public static int GetBiggestId()
-        {
-            int result = 0;
-            List<Note> currentNotes = totalNotes;
-            if (totalNotes.Count <= 0)
-            {
-                currentNotes = DBHelper.GetAllNotes();
-            }
-            foreach (var note in currentNotes)
-            {
-                if (note.id > result)
-                {
-                    result = note.id;
-                }
-            }
+        //public static int GetBiggestId()
+        //{
+        //    int result = 0;
+        //    List<Note> currentNotes = totalNotes;
+        //    if (totalNotes.Count <= 0)
+        //    {
+        //        currentNotes = DBHelper.GetAllNotes();
+        //    }
+        //    foreach (var note in currentNotes)
+        //    {
+        //        if (note.id > result)
+        //        {
+        //            result = note.id;
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         // 修改某笔记项
         public static void Modify(Tags tags, string newTitle)
