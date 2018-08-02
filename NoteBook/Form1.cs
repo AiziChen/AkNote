@@ -168,17 +168,21 @@ namespace AkNote
         }
         
         // 暴露Push方法给JS脚本调用，用来存储编辑器内容到数据库
-        public void Push(string content)
+        public void AsyncPush(string content)
         {
             noteList.Invoke(new Action(() =>
             {
-                if (noteList.SelectedNode == null)
-                {
-                    return;
-                }
-                Tags tags = (Tags)noteList.SelectedNode.Tag;
-                DBHelper.ModifyContent(tags.id, content);
+                if (noteList.SelectedNode == null) return;
+                Push(content);
             }));
+        }
+
+        private ToolTip toolTip = new ToolTip();
+        private void Push(String content)
+        {
+            Tags tags = (Tags)noteList.SelectedNode.Tag;
+            DBHelper.ModifyContent(tags.id, content);
+            toolTip.Show($"{noteList.SelectedNode.Text} - 已保存", noteList, 1800);
         }
 
         //
@@ -192,8 +196,7 @@ namespace AkNote
             if (response.Result.Result != null)
             {
                 string content = response.Result.Result.ToString();
-                Tags tags = (Tags)noteList.SelectedNode.Tag;
-                DBHelper.ModifyContent(tags.id, content);
+                Push(content);
             }
         }
         

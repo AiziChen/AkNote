@@ -11,27 +11,18 @@
 
         tinymce.init({
             selector: "textarea",
-
             language: "zh_CN",
-
             plugins: [
-
                 "advlist autolink link image lists charmap preview hr anchor pagebreak",
-
                 "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-
                 "save table contextmenu directionality emoticons paste textcolor codesample"
-
             ],
-
             toolbar: "fullscreen",
-
             statusbar: false,
-
             toolbar: "formatselect | fontselect | fontsizeselect | forecolor backcolor | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image | hr emoticons | codesample",
         }).then(function (editors) {
             tinymce.activeEditor.shortcuts.add('meta+s', "get editor's html", function () {
-                jsEvent.push(getHtml());
+                jsEvent.asyncPush(getHtml());
             });
             tinymce.activeEditor.shortcuts.add('meta+n', "new one note", function () {
                 jsEvent.newNote();
@@ -40,13 +31,10 @@
             tinymce.activeEditor.dom.setStyle(tinymce.activeEditor.dom.select('body'), 'background-color', '#fcfed0');
         });
     </script>
-
-
 </head>
 
 
 <body>
-
 
 <textarea id="editor"></textarea>
 
