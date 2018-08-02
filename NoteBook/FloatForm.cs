@@ -77,14 +77,11 @@ namespace AkNote
         {
             public uint dwLength;
             public uint dwMemoryLoad;
-            public uint dwTotalPhys;
-            public uint dwAvailPhys;
-            public uint dwTotalPageFile;
-            public uint dwAvailPageFile;
-            public uint dwTotalVirtual;
-            public uint dwAvailVirtual;
+            public ulong ullTotalPhys;
+            public ulong ullAvailPhys64bit;     // 64bit System Available Memery value
+            public ulong ullUsedPhys32bit;     // 32bit System used Memery value
         }
-        [DllImport("kernel32")]
+        [DllImport("kernel32.dll")]
         public static extern void GlobalMemoryStatus(ref MEMORY_INFO meminfo);
 
         /// <summary>
@@ -103,22 +100,28 @@ namespace AkNote
         /// </summary>
         private void ShowMemoryInfo()
         {
+            MEMORY_INFO MemInfo;
+            MemInfo = new MEMORY_INFO();
             while (true)
             {
-                MEMORY_INFO MemInfo;
-                MemInfo = new MEMORY_INFO();
                 GlobalMemoryStatus(ref MemInfo);
+                ulong totalMb = MemInfo.ullTotalPhys / 1024 / 1024;
 
-                long totalMb = Convert.ToInt64(MemInfo.dwTotalPhys.ToString()) / 1024 / 1024;
-                long avaliableMb = Convert.ToInt64(MemInfo.dwAvailPhys.ToString()) / 1024 / 1024;
-                
+                // 32 bit version
+                //ulong usedMb = MemInfo.ullUsedPhys32bit / 1024 / 1024;
+                //label1.Invoke(new Action(() =>
+                //{
+                //    label1.Text = usedMb * 100 / totalMb + "%";
+                //}));
+
+                // 64 bit version
+                ulong avaliableMb = MemInfo.ullAvailPhys64bit / 1024 / 1024;
                 label1.Invoke(new Action(() =>
                 {
                     label1.Text = (totalMb - avaliableMb) * 100 / totalMb + "%";
                 }));
                 System.Threading.Thread.Sleep(1000);
             }
-            
         }
 
         /// <summary>

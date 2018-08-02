@@ -405,18 +405,18 @@ namespace AkNote
         }
 
         private static void SaveCSSAndJSFile(string path) { 
-                // 保存css和js
-                string srcDir = path + "\\resources";
-                if (!Directory.Exists(srcDir + "\\css"))
-                {
-                    Directory.CreateDirectory(srcDir + "\\css");
-                }
-                if (!Directory.Exists(srcDir + "\\js"))
-                {
-                    Directory.CreateDirectory(srcDir + "\\js");
-                }
-                // 复制
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\css\\prism.css", srcDir + "\\css\\prism.css", true);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\js\\prism.js", srcDir + "\\js\\prism.js", true);}
+            // 保存css和js
+            string srcDir = path + "\\resources";
+            if (!Directory.Exists(srcDir + "\\css"))
+            {
+                Directory.CreateDirectory(srcDir + "\\css");
+            }
+            if (!Directory.Exists(srcDir + "\\js"))
+            {
+                Directory.CreateDirectory(srcDir + "\\js");
+            }
+            // 复制
+            File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\css\\prism.css", srcDir + "\\css\\prism.css", true);
+            File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\js\\prism.js", srcDir + "\\js\\prism.js", true);}
     }
 }
