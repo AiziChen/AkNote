@@ -26,6 +26,8 @@ namespace AkNote
         private List<TreeNode> expandedList = new List<TreeNode>();
         // 保存已经搜索出来的并处于展开状态的所有id
         private List<TreeNode> searchedExpanded = new List<TreeNode>();
+        // 小工具提示框
+        private static ToolTip toolTip = new ToolTip();
 
         public Form1()
         {
@@ -177,12 +179,14 @@ namespace AkNote
             }));
         }
 
-        private ToolTip toolTip = new ToolTip();
         private void Push(String content)
         {
             Tags tags = (Tags)noteList.SelectedNode.Tag;
             DBHelper.ModifyContent(tags.id, content);
-            toolTip.Show($"{noteList.SelectedNode.Text} - 已保存", noteList, 1800);
+            string title = noteList.SelectedNode.Text;
+            // 由于toolTip会缓存上一个对象，因此在显示内容之前更新一下数据（"黑"科技）。
+            toolTip.Show($"", noteList, 0);
+            toolTip.Show($"{title} - 已保存", noteList, 1800);
         }
 
         //
