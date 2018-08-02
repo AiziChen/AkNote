@@ -44,7 +44,7 @@ namespace AkNote
             SQLiteCommand cmd = GetCommand();
             // create Notebook table
             cmd.CommandText = "CREATE TABLE if not exists Notebook(编号 integer primary key autoincrement, 日期 datetime, 访问日期 datetime" +
-                ", 标题 varchar(255), 加密 boolean, 内容 TEXT, 父ID integer)";
+                ", 标题 varchar(255), 加密 boolean, 内容 LONGTEXT, 父ID integer)";
             cmd.ExecuteNonQuery();
             // create Settings table
             cmd.CommandText = "CREATE TABLE if not exists Settings(编号 integer primary key autoincrement, 修改日期 datetime" +

@@ -10,7 +10,14 @@ namespace AkNote
 {
     class Win32Utility
     {
-        
+        /// <summary>
+        /// 以下是TextBox相关
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg,
             int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
@@ -86,5 +93,6 @@ namespace AkNote
             }
             return builder.ToString();
         }
+
     }
 }
