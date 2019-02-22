@@ -1,4 +1,4 @@
-# AkNote
+﻿# AkNote
 一款所见即所得的富文本编辑器，适用于编程工作者、教师、作家等等...（A WYSIWYG rich notepad for computer science, teacher, author and all kinds of peolpe(AKO).) 
 ### 其特色之处在于：
 0. 开源，下载和使用都是免费的；
@@ -18,7 +18,8 @@
 2. git clone本仓库到指定目录
 3. 使用Visual Studio打开该项目
 4. 安装Nuget插件（如果没有）
-5. 选择Debug和x86平台运行即可看到效果
+5. 选择Debug的x86平台运行，此时会看到软件已经启动，但编辑器界面却是空白的，接着下一步操作
+6. 打开文件管理器，将源码中的tinymce文件夹复制进刚才项目生成的x86/Debug文件夹中，再次选择Debug的x86平台运行，即可看到效果
 
 ## 截图 - ScreenShot
 ### 1.（主界面 - Main window)
