@@ -158,20 +158,20 @@ namespace AkNote
             cmd.CommandText = "SELECT MAX(编号) AS 最大编号 FROM Notebook";
             SQLiteDataReader reader = cmd.ExecuteReader();
             if (reader.Read()) {
-                string maxNumStr = reader["最大编号"].ToString();
-                if (!String.IsNullOrWhiteSpace(maxNumStr))
-                {
-                    int result = Int32.Parse(maxNumStr);
-                    reader.Close();
-                    return result;
-                }
+                int result = Int32.Parse(reader["最大编号"].ToString());
+                reader.Close();
+                return result;
             }
-            reader.Close();
-            return 0;
+            else
+            {
+                reader.Close();
+                return 0;
+            }
         }
 
         //
         // Close the DB connection
+        //
         public static void DBClose(DbDataReader reader, SQLiteConnection connection)
         {
             if (reader != null)

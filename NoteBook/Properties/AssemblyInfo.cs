@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("一款JS笔记软件")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("林海")]
-[assembly: AssemblyProduct("AkNote")]
+[assembly: AssemblyProduct("NoteBook")]
 [assembly: AssemblyCopyright("Copyright ©  2017 by Quanyec")]
 [assembly: AssemblyTrademark("Quanyec")]
 [assembly: AssemblyCulture("")]
