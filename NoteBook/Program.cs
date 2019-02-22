@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -9,6 +11,7 @@ namespace AkNote
     /**
      * 程序主入口
      * @author QuanyeChen
+     * License Under the GPL v2.0
      */ 
     static class Program
     {
@@ -18,9 +21,42 @@ namespace AkNote
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            // 自启动
+            string exePath = Application.ExecutablePath;
+            RegistryKey rk = Registry.LocalMachine;
+            RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+            rk2.SetValue("AkNote", exePath);
+            rk2.Close();
+            rk.Close();
+            
+            // 防止启动两个AkNote
+            bool ret;
+            Mutex mutex = new Mutex(true, Application.ProductName, out ret);
+            if (ret)
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(GetMainForm());
+            }
+            else
+            {
+                //MessageBox.Show("AkNote已经启动过了");
+                form1.Show();
+            }
+        }
+
+        private static Form1 form1;
+        private static Form1 GetMainForm()
+        {
+            if (form1 == null)
+            {
+                form1 = new Form1();
+                return form1;
+            }
+            else
+            {
+                return form1;
+            }
         }
     }
 }
