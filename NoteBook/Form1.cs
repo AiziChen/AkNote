@@ -94,8 +94,8 @@ namespace AkNote
             // Register the JSEvent
             browser.RegisterJsObject("jsEvent", this);
             // 创建并显示浮动窗口
-            floatForm = new FloatForm(this);
-            floatForm.Show();
+            //floatForm = new FloatForm(this);
+            //floatForm.Show();
             // 为textBoxSearch设置hint
             Win32Utility.SetCueText(textBoxSearch, "搜索...");
         }
