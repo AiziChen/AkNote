@@ -60,6 +60,7 @@
             this.帮助ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -232,7 +233,8 @@
             // 
             this.文件ToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.新建ToolStripMenuItem1,
-            this.导出选中笔记ToolStripMenuItem});
+            this.导出选中笔记ToolStripMenuItem,
+            this.退出ToolStripMenuItem});
             this.文件ToolStripMenuItem1.Name = "文件ToolStripMenuItem1";
             this.文件ToolStripMenuItem1.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem1.Text = "文件";
@@ -241,14 +243,14 @@
             // 
             this.新建ToolStripMenuItem1.Name = "新建ToolStripMenuItem1";
             this.新建ToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.新建ToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
+            this.新建ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.新建ToolStripMenuItem1.Text = "新建";
             this.新建ToolStripMenuItem1.Click += new System.EventHandler(this.新建ToolStripMenuItem_Click);
             // 
             // 导出选中笔记ToolStripMenuItem
             // 
             this.导出选中笔记ToolStripMenuItem.Name = "导出选中笔记ToolStripMenuItem";
-            this.导出选中笔记ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.导出选中笔记ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.导出选中笔记ToolStripMenuItem.Text = "导出选中笔记";
             this.导出选中笔记ToolStripMenuItem.Click += new System.EventHandler(this.导出选中笔记ToolStripMenuItem_Click);
             // 
@@ -264,7 +266,7 @@
             // 
             this.提交ToolStripMenuItem2.Name = "提交ToolStripMenuItem2";
             this.提交ToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.提交ToolStripMenuItem2.Size = new System.Drawing.Size(144, 22);
+            this.提交ToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.提交ToolStripMenuItem2.Text = "提交";
             this.提交ToolStripMenuItem2.Click += new System.EventHandler(this.提交ToolStripMenuItem_Click);
             // 
@@ -285,7 +287,7 @@
             // 关于ToolStripMenuItem1
             // 
             this.关于ToolStripMenuItem1.Name = "关于ToolStripMenuItem1";
-            this.关于ToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
+            this.关于ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.关于ToolStripMenuItem1.Text = "关于";
             this.关于ToolStripMenuItem1.Click += new System.EventHandler(this.关于ToolStripMenuItem1_Click);
             // 
@@ -301,6 +303,13 @@
             this.menuStrip1.Size = new System.Drawing.Size(991, 25);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 退出ToolStripMenuItem
+            // 
+            this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.退出ToolStripMenuItem.Text = "退出";
+            this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -359,6 +368,7 @@
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 导出选中笔记ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
     }
 }
 

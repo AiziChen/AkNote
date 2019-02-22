@@ -424,6 +424,13 @@ namespace AkNote
             }
             // 复制
             File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\css\\prism.css", srcDir + "\\css\\prism.css", true);
-            File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\js\\prism.js", srcDir + "\\js\\prism.js", true);}
+            File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\html_output\\resources\\js\\prism.js", srcDir + "\\js\\prism.js", true);
+        }
+
+        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Dispose();
+            Application.Exit();
+        }
     }
 }

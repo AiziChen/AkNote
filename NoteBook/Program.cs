@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,11 +38,13 @@ namespace AkNote
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(GetMainForm());
+                mutex.ReleaseMutex();
             }
             else
             {
-                //MessageBox.Show("AkNote已经启动过了");
-                form1.Show();
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                MessageBox.Show("AkNote之前启动过，请按`Alt+Q`即可显示窗口。");
             }
         }
 
